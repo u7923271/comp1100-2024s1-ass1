@@ -1,0 +1,20 @@
+stages:
+  - build
+  - test
+
+compile:
+  image: anusoco/comp1100-2024s1:ass1
+  stage: build
+  tags:
+    - comp1100
+  script:
+    - cabal v2-build
+
+run-test-script:
+  image: anusoco/comp1100-2024s1:ass1
+  stage: test
+  allow_failure: true
+  tags:
+    - comp1100
+  script:
+    - /test.sh
