@@ -93,6 +93,21 @@ apply to Part B of the assignment. You may also ask for help from tutors for thi
 parts, but the help you will receive will be focused on conceptual
 understanding rather than details of the tasks themselves.
 
+## Gitlab CI
+
+You may notice a box in your repository on the Gitlab web view, looking something like this:
+
+![ci-success](images/ci-success.png)
+
+To help you ensure your submitted code is compiling, we've added a
+[Continuous Integration](https://en.wikipedia.org/wiki/Continuous_integration) (CI) script to this assignment. The CI will check that your code compiles, and run some tests on your code.
+
+There's three states your CI can be in:
+
+- A red x, indicating your code is not compiling. This is something you should fix as soon as possible, as non-compiling code will not receive marks. You could fix this by either resolving the error, or by commenting out the erroring code to still submit it.
+- An orange exclamation: this indicates that one of the tests in `tests/ShapesTest.hs` isn't passing. This is to be expected at the start of the assignment, but once you have finished Part A of the assignment, this might indicate an issue with your code.
+- A green tick: this indicates that your code is compiling, and all the tests are passing.
+
 ---
 
 ## Getting Started
@@ -164,6 +179,9 @@ should be.
   course) need to put more complex code here. You are not required to
   understand it.
 
+* `.gitlab-ci.yml` and `Dockerfile` are there to support the continuous integration.
+  You are not required to understand them.
+
 ## Overview of Cabal
 
 `cabal` is the build tool for Haskell programs and libraries. It
@@ -200,7 +218,7 @@ assignment, it will respond to the following actions:
 
 | Action                     | Effect                                              |
 |----------------------------|-----------------------------------------------------|
-| `Esc` (key)                | Clear the canvas.                                            |
+| `Esc` (key)                | Clear the canvas and all settings.                                            |
 | `1`/`2` (key)                  | Display the sample images.                                      |
 | `C` (key)                  | Change colour (of shape to draw).                            |
 | `T` (key)                  | Change tool (type of shape to draw).             |
@@ -323,7 +341,7 @@ this task are all in `src/View.hs`:
     (translate) the generated `Picture` so it shows up where it is
     supposed to go. Drawing diagrams will help. The `abs` function
     might also help - it computes the absolute value of its argument
-    (i.e., `abs x == x` if `x > 0`, and `abs x == - x` otherwise).
+    (i.e., `abs x == x` if `x >= 0`, and `abs x == - x` otherwise).
 
   - For `Rectangle`s, the two `Point`s correspond to any opposite corners.
 
@@ -378,13 +396,12 @@ forward.
 language that uses a similar pattern to build front-end web
 applications that are compiled to JavaScript.)
 
-Let's trace a simple interaction. The user wants to draw a *red
-line* by clicking on the screen at coordinates $$(1, 1)$$ and
-releasing the mouse at coordinates $$(2, 2)$$. Atarting at a blank
-canvas, the Model will transition as follows, starting with the
-initial model:
+Let's trace a simple interaction. The user, starting with a blank canvas,
+wants to draw a *red line* by clicking on the screen at coordinates $$(1, 1)$$ and
+releasing the mouse at coordinates $$(2, 2)$$. The Model will transition as follows,
+starting with the initial model:
 
-`Model [] Black (LineTool Nothing)`
+  `Model [] Black (LineTool Nothing)`
 
 - The user presses "C" to change the colour from black to red:
 
@@ -424,7 +441,7 @@ click-drag-release action, so you should construct the appropriate
 shape and add it to the `[Shape]` in the `Model`. You should also
 remove the starting point from the current `Tool`, so that future
 shapes draw properly too. For `PolyTool` we can ignore `PointerRelease`s,
-as we will be finishing polygons using the spacebar in Task 3.2. For `CubiodTool`
+as we will be finishing polygons using the spacebar in Task 3.2. For `CuboidTool`
 we need to consider which part of the task of drawing the Cuboid we are performing.
 
 Once you have finished this task for normal input, you may also want to consider
@@ -535,8 +552,8 @@ for COMP1100 students.
 ## Communicating
 
 **Do not** post your code publicly, even for Part A, on Ed Discussions or via
-any other means. Posts on Ed Discussions can trigger emails to all students,
-depending on how they have configured notifications, so if by
+any other means. Posts on Ed Discussions can trigger emails to students,
+depending on how they have configured their notifications, so if by
 mistake you post your code publicly, others will have access to your
 code and you may be held responsible for plagiarism.
 
@@ -547,7 +564,7 @@ instructors.
 When brainstorming with your friends, **do not view each others' code**
 for anything other than Part A. There
 might be pressure from your friends, but this is for both your and
-their benefit. Anything that smells of plagiarism will be investigated
+their benefit. Anything that hints at plagiarism will be investigated
 and there may be serious consequences.
 
 Sharing concepts and sketches is perfectly fine, but sharing should stop
@@ -562,7 +579,7 @@ Course staff will not look at assignment code unless it is posted
 Course staff will typically give assignment assistance by asking questions,
 directing you to relevant exercises from the labs, or definitions and
 examples from the lectures. They will not give direct instructions on how
-to write your Part B code, but they will give you more generous help
+to edit your Part B code, but they will give you more generous help
 for questions related to Part A.
 
 ## Submission Checklist

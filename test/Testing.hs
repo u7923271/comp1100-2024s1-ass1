@@ -1,6 +1,9 @@
 module Testing where
 
 import System.Exit
+import System.Timeout
+import Control.Exception
+import Data.Maybe
 
 -- | A 'Test' is a 'String' label identifying the thing being tested,
 -- and the result of the test after running it. We give labels to
@@ -35,14 +38,33 @@ assertApproxEqual actual expected
   | otherwise =
     Fail (show actual ++ " is not approx. equal to\n" ++ show expected)
 
--- | Run a list of tests. You are not expected to understand how this
--- works.
+-- | Safely evaluates a test and returns if it is passing.
+-- Prints information about which tests pass and which fail.
+-- You are not expected to understand how this works.
+runTest :: Test -> IO Bool
+runTest (Test name result) = do
+  res <- try $ evaluate result :: IO (Either SomeException TestResult)
+  (success,text) <- return $ case res of
+    Left e                -> (False, "ERROR: " <> name <> "\n" <> show e)
+    Right (Fail failMsg)  -> (False, "FAIL: " <> name <> "\n" <> failMsg)
+    Right OK              -> (True, "PASS: " <> name)
+  putStrLn text
+  return success
+
+-- | Adds a timeout wrapper around the test being executed, which results in an
+-- error being thrown if timeout is exceeded, which is caught by `runTest`.
+-- Takes a timeout in seconds and a test case to evaluate.
+-- You are not expected to understand how this works.
+runTestTimeout :: Int -> Test -> IO Bool
+runTestTimeout time test = do
+  res <- timeout (time*10^(6::Int)) (runTest test)
+  return $ fromMaybe False res
+
+-- | Run a list of tests safely using runTest
+-- You are not expected to understand how this works.
 runTests :: [Test] -> IO ()
-runTests [] = exitSuccess
-runTests ((Test msg OK):ts) = do
-  putStrLn ("PASS: " ++ msg)
-  runTests ts
-runTests ((Test msg (Fail failMsg)):_) = do
-  putStrLn ("FAIL: " ++ msg)
-  putStrLn failMsg
-  exitFailure
+runTests tests = do
+  res <- mapM (runTestTimeout 5) tests
+  let exit | and res = exitSuccess
+           | otherwise = exitFailure
+  exit
