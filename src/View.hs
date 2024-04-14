@@ -51,22 +51,22 @@ slope a b = (abs ((abs (y-b))/(abs (x-a))))
 -- TODO
 shapeToPicture :: Shape -> Picture
 shapeToPicture pic = case pic of
-  (Line (x,y) (x,y)) -> drawingOf(polyline[(x,y),(a,b)]) --Done
+  (Line (x,y) (a,b)) -> drawingOf(polyline[(x,y),(a,b)]) --Done
   (Polygon [x:xs]) -> drawingOf(solidPolygon[x:xs]) --Done
   (Rectangle (x,y) (a,b)) -> drawingOf(solidPolygon[(x,y),(a,y),(a,b),(x,b),(x,y)]) --Done
-  (Circle (x,y) (a,b)) -> drawingOf(translate(solidCircle(slope (x,y) (a,b)), x, y)) --Done
-  Triangle x y -> 
+  (Circle (x,y) (a,b)) -> drawingOf(translated((solidCircle(slope (x,y) (a,b)), x, y))) --Done
+  (Triangle (x,y) (a,b)) -> 
   (Cuboid (x,y) (a,b) (p,r)) -> 
 
 -- TODO
 colourShapeToPicture :: ColourShape -> Picture
 colourShapeToPicture colshape = case colshape of
-  (Line, x) -> drawingOf(coloured(polyline[(x,y),(a,b)]), x)
-  (Polygon, x) -> drawingOf(coloured(solidPolygon[x:xs]), x)
-  (Rectangle, x) -> drawingOf(coloured(solidPolygon[(x,y),(a,y),(a,b),(x,b)]), x)
-  (Circle, x) -> drawingOf(coloured(translated(solidCircle(slope (x,y) (a,b)), x, y)), x)
-  (Triangle, x) ->
-  (Cuboid, x) -> 
+  ((Line (x,y) (a,b)), x) -> drawingOf(coloured((polyline[(x,y),(a,b)]), x))
+  ((Polygon [x:xs]), x) -> drawingOf(coloured((solidPolygon[x:xs]), x))
+  ((Rectangle (x,y) (a,b)), x) -> drawingOf(coloured((solidPolygon[(x,y),(a,y),(a,b),(x,b)]), x))
+  ((Circle (x,y) (a,b)), x) -> drawingOf(coloured((translated((solidCircle((slope (x,y) (a,b)))), x, y)), red)) 
+  ((Triangle (x,y) (a,b)), x) -> 
+  ((Cuboid (x,y) (a,b) (p,r)), x) -> 
 
 -- DONE!
 colourShapesToPicture :: [ColourShape] -> Picture
