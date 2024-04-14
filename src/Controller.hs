@@ -54,10 +54,33 @@ handleEvent event (Model shapes colour tool) =
       inputModel :: Model
       inputModel = Model shapes colour tool
 
--- TODO
+-- DONE!
 switchColour :: ColourChoice -> ColourChoice
-switchColour = undefined
+switchColour colour = case colour of
+    Red -> Green
+    Green -> Blue
+    Blue -> Cyan
+    Cyan -> Magenta
+    Magenta -> Yellow
+    Yellow -> White
+    White -> Black
+    Black -> Red
 
--- TODO
+
+-- DONE!
 switchTool :: Tool -> Tool
-switchTool = undefined
+switchTool tool = case tool of
+    (LineTool (Nothing)) -> PolyTool []
+    (LineTool (Just x)) -> LineTool (Just x)
+    (PolyTool []) -> RectangleTool (Nothing)
+    (PolyTool [x]) -> PolyTool [x]
+    (RectangleTool (Nothing)) -> CircleTool (Nothing)
+    (RectangleTool (Just x)) -> RectangleTool (Just x)
+    (CircleTool (Nothing)) -> TriangleTool (Nothing)
+    (CircleTool (Just x)) -> CircleTool (Just x)
+    (TriangleTool (Nothing)) -> CuboidTool (Nothing) (Nothing)
+    (TriangleTool (Just x)) -> TriangleTool (Just x)
+    (CuboidTool (Nothing) (Nothing)) -> LineTool (Nothing)
+    (CuboidTool (Just x) (Just y)) -> CuboidTool (Just x) (Just y)
+    (CuboidTool (Just x) (Nothing)) -> CuboidTool (Just x) (Nothing)
+    (CuboidTool (Nothing) (Just y)) -> CuboidTool (Nothing) (Just y)

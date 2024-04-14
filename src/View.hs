@@ -23,9 +23,15 @@ modelToPicture (Model shapes colour tool)
 
     stringToText = lettering . pack
 
--- TODO
+-- DONE!
 toolToLabel :: Tool -> String
-toolToLabel = undefined
+toolToLabel tool = case tool of
+  LineTool -> "Line: click-drag-release"
+  PolyTool -> "Polygon: click 3+ times, then spacebar"
+  RectangleTool -> "Rectangle: click-drag-release for opposite corners"
+  CircleTool -> "Circle: click-drag-release from centre to perimeter"
+  TriangleTool -> "Triangle: click-drag-release from centre to corner"
+  CuboidTool -> "Cuboid: click-drag-release for opposite corners, then click new top-left corner"
 
 -- TODO
 colourChoiceToColour :: ColourChoice -> Colour
