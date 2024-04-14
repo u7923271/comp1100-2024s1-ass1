@@ -27,13 +27,13 @@ handleEvent event (Model shapes colour tool) =
       | k == "Backspace" || k == "Delete" -> undefined
 
       -- TODO
-      | k == " " -> undefined
+      | k == " " -> colourShapesToPicture
 
-      -- TODO
-      | k == "C" -> undefined
+      -- DONE!
+      | k == "C" -> switchColour
 
-      -- TODO
-      | k == "T" -> undefined
+      -- DONE!
+      | k == "T" -> switchTool
 
       -- ignore other keys
       | otherwise -> inputModel
