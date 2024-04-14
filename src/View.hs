@@ -48,7 +48,7 @@ colourChoiceToColour cols = case cols of
 slope :: Point -> Point -> Double 
 slope a b = (abs ((abs (y-b))/(abs (x-a))))
 
--- TODO
+-- DONE
 shapeToPicture :: Shape -> Picture
 shapeToPicture pic = case pic of
   (Line (x,y) (a,b)) -> drawingOf(polyline[(x,y),(a,b)]) --Done
@@ -62,7 +62,7 @@ shapeToPicture pic = case pic of
   &(polyline[(a,y),((abs(p-a)),(abs(r-y))),(p,r)])
   &(polyline[((abs(p-x)),(abs(b-y))),((abs(p-a)),(abs(r-y)))]))
 
--- TODO
+-- DONE
 colourShapeToPicture :: ColourShape -> Picture
 colourShapeToPicture colshape = case colshape of
   ((Line (x,y) (a,b)), n) -> drawingOf(coloured((polyline[(x,y),(a,b)]), n))
