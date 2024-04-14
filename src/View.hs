@@ -36,24 +36,41 @@ toolToLabel tool = case tool of
 -- DONE!
 colourChoiceToColour :: ColourChoice -> Colour
 colourChoiceToColour cols = case cols of
-  Red -> RGBA !255 !0 !0 !1
-  Green -> RGBA !20 !255 !0 !1
-  Blue -> RGBA !0 !25 !255 !1
+  Red -> red
+  Green -> green
+  Blue -> blue
   Cyan -> RGBA !0 !255 !255 !1
   Magenta -> RGBA !255 !0 !255 !1
-  Yellow -> RGBA !255 !255 !0 !1
-  White -> RGBA !255 !255 !255 !1
-  Black -> RGBA !0 !0 !0 !1
+  Yellow -> yellow
+  White -> white
+  Black -> black
 
+slope :: Point -> Point -> Double 
+slope a b = (abs ((abs (y-b))/(abs (x-a))))
 
 -- TODO
 shapeToPicture :: Shape -> Picture
-shapeToPicture = undefined
+shapeToPicture pic = case pic of
+  (Line (x,y) (x,y)) -> drawingOf(polyline[(x,y),(a,b)]) --Done
+  (Polygon [x:xs]) -> drawingOf(solidPolygon[x:xs]) --Done
+  (Rectangle (x,y) (a,b)) -> drawingOf(solidPolygon[(x,y),(a,y),(a,b),(x,b),(x,y)]) --Done
+  (Circle (x,y) (a,b)) -> drawingOf(translate(solidCircle(slope (x,y) (a,b)), x, y)) --Done
+  Triangle x y -> 
+  (Cuboid (x,y) (a,b) (p,r)) -> 
 
 -- TODO
 colourShapeToPicture :: ColourShape -> Picture
-colourShapeToPicture = undefined
+colourShapeToPicture colshape = case colshape of
+  (Line, x) -> drawingOf(coloured(polyline[(x,y),(a,b)]), x)
+  (Polygon, x) -> drawingOf(coloured(solidPolygon[x:xs]), x)
+  (Rectangle, x) -> drawingOf(coloured(solidPolygon[(x,y),(a,y),(a,b),(x,b)]), x)
+  (Circle, x) -> drawingOf(coloured(translate(solidCircle(slope (x,y) (a,b)), x, y)), x)
+  (Triangle, x) ->
+  (Cuboid, x) -> 
 
--- TODO
+-- DONE!
 colourShapesToPicture :: [ColourShape] -> Picture
-colourShapesToPicture = undefined
+colourShapesToPicture colshapes = case colshapes of
+  [] = drawingOf(blank)
+  [x] = colourShapesToPicture x
+  [x:xs] = colourShapesToPicture xs
