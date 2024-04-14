@@ -64,7 +64,7 @@ colourShapeToPicture colshape = case colshape of
   (Line, x) -> drawingOf(coloured(polyline[(x,y),(a,b)]), x)
   (Polygon, x) -> drawingOf(coloured(solidPolygon[x:xs]), x)
   (Rectangle, x) -> drawingOf(coloured(solidPolygon[(x,y),(a,y),(a,b),(x,b)]), x)
-  (Circle, x) -> drawingOf(coloured(translate(solidCircle(slope (x,y) (a,b)), x, y)), x)
+  (Circle, x) -> drawingOf(coloured(translated(solidCircle(slope (x,y) (a,b)), x, y)), x)
   (Triangle, x) ->
   (Cuboid, x) -> 
 
