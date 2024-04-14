@@ -33,9 +33,18 @@ toolToLabel tool = case tool of
   TriangleTool -> "Triangle: click-drag-release from centre to corner"
   CuboidTool -> "Cuboid: click-drag-release for opposite corners, then click new top-left corner"
 
--- TODO
+-- DONE!
 colourChoiceToColour :: ColourChoice -> Colour
-colourChoiceToColour = undefined
+colourChoiceToColour cols = case cols of
+  Red -> RGBA !255 !0 !0 !1
+  Green -> RGBA !20 !255 !0 !1
+  Blue -> RGBA !0 !25 !255 !1
+  Cyan -> RGBA !0 !255 !255 !1
+  Magenta -> RGBA !255 !0 !255 !1
+  Yellow -> RGBA !255 !255 !0 !1
+  White -> RGBA !255 !255 !255 !1
+  Black -> RGBA !0 !0 !0 !1
+
 
 -- TODO
 shapeToPicture :: Shape -> Picture
